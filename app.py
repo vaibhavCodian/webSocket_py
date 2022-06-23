@@ -9,7 +9,7 @@ sock = Sock(app)
 
 @app.route("/")
 def hello():
-    return "Hello from Python!"
+    return "Hello Bois!"
 
 
 @sock.route('/echo')
@@ -17,6 +17,7 @@ def echo(ws):
     while True:
         data = ws.receive()
         ws.send(data)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
