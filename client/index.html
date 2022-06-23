@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webSocket_Poc</title>
+</head>
+<body>
+    Client Route
+    <button onclick="sendMsg()">Send Msg</button>
+    <div id="content"></div>
+</body>
+<script>
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://websocket-falshmob.herokuapp.com/echo');
+    // const socket = new WebSocket('ws://127.0.0.1:8000/echo');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+        console.log('Connected to the WS Server!')
+    });
+
+    // Connection closed
+    socket.addEventListener('close', function (event) {
+        console.log('Disconnected from the WS Server!')
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        console.log('Message from server ', event.data);
+        document.body.innerHTML += "<h2> ON <h2> <br?>";
+    });
+    // Send a msg to the websocket
+    const sendMsg = () => {
+        socket.send('Hello from Client1!');
+    }
+</script>
+</html>
