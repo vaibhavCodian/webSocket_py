@@ -11,9 +11,11 @@
     <div id="content"></div>
 </body>
 <script>
+    // url = "wss://websocket-falshmob.herokuapp.com/echo";
+    url = "ws://127.0.0.1:8000/echo";
+
     // Create WebSocket connection.
-    const socket = new WebSocket('ws://websocket-falshmob.herokuapp.com/echo');
-    // const socket = new WebSocket('ws://127.0.0.1:8000/echo');
+    let socket = new WebSocket(url);
 
     // Connection opened
     socket.addEventListener('open', function (event) {
@@ -31,7 +33,16 @@
         document.body.innerHTML += "<h2> ON <h2> <br?>";
     });
     // Send a msg to the websocket
-    const sendMsg = () => {
+    const sendMsg = async () => {
+        if ( socket.readyState === 3 ) {
+            socket.close();
+            socket = new WebSocket(url);
+
+            // wait until new connection is open
+            while (socket.readyState !== 1) {
+                await new Promise(r => setTimeout(r, 250));
+            }
+        }
         socket.send('Hello from Client1!');
     }
 </script>
